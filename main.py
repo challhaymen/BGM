@@ -371,11 +371,11 @@ def color_backlog(val):
     if pd.isna(val):
         return ''
     if val < st.session_state['threshold_low']:
-        return f"background-color: {st.session_state['color_low']}; color: white"
+        return f"background-color: {st.session_state['color_low']}; color: black"
     elif val < st.session_state['threshold_med']:
-        return f"background-color: {st.session_state['color_med']}; color: white"
+        return f"background-color: {st.session_state['color_med']}; color: black"
     else:
-        return f"background-color: {st.session_state['color_high']}; color: white"
+        return f"background-color: {st.session_state['color_high']}; color: black"
 
 def calculate_cross_matrix(df_final):
    
@@ -540,6 +540,37 @@ def check_form_necessary_fields(fields):
 
 st.set_page_config(page_title='Système de Simulation de Bagages', layout='wide')
 
+st.markdown("""
+    <style>
+            /* Page background */
+            .stApp {
+                background-color: #f7f7f7;
+            }
+
+            /* Sidebar background */
+            [data-testid="stSidebar"] {
+                background-color: #f3f3f3;
+            }
+
+            /* File Uploader */
+            [data-testid="stFileUploaderDropzone"] {
+                background-color: #f7f7f7;
+            }
+
+            /* st.info background */
+            [data-testid="stAlert"] {
+                background-color: #c0a1b2;
+                border-radius: 10px;
+            }
+
+            [data-testid="stAlert"] p {
+                color: #8d5f7b;
+            }
+
+            /*  */
+    <\style>
+""", unsafe_allow_html=True)
+
 st.title('Système de Simulation de Bagages')
 st.markdown("---")
 
@@ -551,7 +582,7 @@ st.sidebar.markdown("---")
 st.sidebar.header("Couleurs Backlog")
 st.session_state['color_low'] = st.sidebar.color_picker("Couleur Bas (en dessous seuil bas)", value='#02B707')
 st.session_state['color_med'] = st.sidebar.color_picker("Couleur Moyen (entre seuil bas et moyen)", value='#FB8B0F')
-st.session_state['color_high'] = st.sidebar.color_picker("Couleur Haut (en dessus du seuil moyen)", value='#FD0202')
+st.session_state['color_high'] = st.sidebar.color_picker("Couleur Haut (en dessus du seuil moyen)", value='#FD0202') # c10130
 
 st.sidebar.markdown("---")
 st.sidebar.header("Seuils Backlog")
