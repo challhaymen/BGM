@@ -568,7 +568,7 @@ st.markdown("""
             }
 
             /*  */
-    <\style>
+    </style>
 """, unsafe_allow_html=True)
 
 st.title('Système de Simulation de Bagages')
