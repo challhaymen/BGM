@@ -265,7 +265,7 @@ def handle_df_final_wp_change():
                 # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_pax_load'] = new_value
                 # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_pax_count'] = np.floor((new_value / 100) * st.session_state['df_final_wp'].loc[row_index, 'business_capacity'])
                 st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'business_pax_load'] = new_value
-                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'business_pax_count'] = np.floor((new_value / 100) * st.session_state['df_final_wp'].loc[row_index, 'business_capacity'])
+                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'business_pax_count'] = np.floor((new_value / 100) * st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'business_capacity'])
 
                 # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_pax_load'] = new_value
                 # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_pax_count'] = st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_pax_count']
@@ -937,7 +937,7 @@ else:
            'business_avg_bag_weight': st.column_config.NumberColumn(label='business_avg_bag_weight', min_value=0, required=True), 
            'flight_status': st.column_config.SelectboxColumn(label='flight_status', options=['scheduled', 'cancelled'], default='scheduled', required=True), 
            'economy_total_bag_weight': st.column_config.NumberColumn(label='economy_total_bag_weight', disabled=True, format='%d'), 
-           'business_ttal_bag_weight': st.column_config.NumberColumn(label='business_ttal_bag_weight', disabled=True, format='%d'), 
+           'business_total_bag_weight': st.column_config.NumberColumn(label='business_total_bag_weight', disabled=True, format='%d'), 
            'economy_total_bag_weight_backlog_prev_flight': st.column_config.NumberColumn(label='economy_total_bag_weight_backlog_prev_flight', disabled=True, format='%d'), 
            'business_total_bag_weight_backlog_prev_flight': st.column_config.NumberColumn(label='business_total_bag_weight_backlog_prev_flight', disabled=True, format='%d'), 
            'economy_total_bag_weight_backlog_prev_flight_added': st.column_config.NumberColumn(label='economy_total_bag_weight_backlog_prev_flight_added', disabled=True, format='%d'),
@@ -1021,7 +1021,7 @@ else:
                         'flight_code': flight_code_wp,
                         'departure_airport': departure_airport_wp,
                         'arrival_airport': arrival_airport_wp,
-                        'departure_date': str(arrival_date_wp),
+                        'departure_date': str(departure_date_wp),
                         'arrival_date': str(arrival_date_wp),
                         'departure_time': str(departure_time_wp),
                         'arrival_time': str(arrival_time_wp),
