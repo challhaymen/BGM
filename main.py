@@ -86,7 +86,11 @@ def handle_df_flights_change():
         flight_code_mask = st.session_state['df_flights_to_edit'].loc[row_index, 'flight_code']
         departure_date_mask = st.session_state['df_flights_to_edit'].loc[row_index, 'departure_date'] 
 
-        st.write(f"Row Index: {row_index}, flight_code: {flight_code_mask}, departure_date: {departure_date_mask}")
+        flight_id_mask = st.session_state['df_flights_to_edit'].loc[row_index, 'flight_id']
+
+        # st.write(f"Row Index: {row_index}, flight_code: {flight_code_mask}, departure_date: {departure_date_mask}")
+
+        st.write(f"Row Index: {row_index}, Flight ID: {flight_id_mask}")
 
         for column_name, new_value in updates.items():
             if column_name == 'departure_airport':
@@ -98,10 +102,11 @@ def handle_df_flights_change():
                                                     (st.session_state['df_aircrafts']['arrival_airport'] == arrival_airport) & 
                                                     (st.session_state['df_aircrafts']['aircraft_code'] == aircraft_code)].empty:
                 
-                    st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    # st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    st.session_state['warnings_list'].append(f"Flight ID: {flight_id_mask} : Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
 
                 else:
-                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'departure_airport'] = new_value
+                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'departure_airport'] = new_value
 
             if column_name == 'arrival_airport':
                 departure_airport = st.session_state['df_flights_to_edit'].loc[row_index, 'departure_airport']
@@ -112,10 +117,11 @@ def handle_df_flights_change():
                                                     (st.session_state['df_aircrafts']['arrival_airport'] == arrival_airport) & 
                                                     (st.session_state['df_aircrafts']['aircraft_code'] == aircraft_code)].empty:
                 
-                    st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    # st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    st.session_state['warnings_list'].append(f"Flight ID: {flight_id_mask}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
 
                 else:
-                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'arrival_airport'] = new_value
+                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'arrival_airport'] = new_value
 
             if column_name == 'aircraft_code':
                 departure_airport = st.session_state['df_flights_to_edit'].loc[row_index, 'departure_airport']
@@ -126,28 +132,36 @@ def handle_df_flights_change():
                                                     (st.session_state['df_aircrafts']['arrival_airport'] == arrival_airport) & 
                                                     (st.session_state['df_aircrafts']['aircraft_code'] == aircraft_code)].empty:
                 
-                    st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    # st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    st.session_state['warnings_list'].append(f"Flight ID: {flight_id_mask}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
 
                 else:
-                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'aircraft_code'] = new_value
+                    # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'aircraft_code'] = new_value
+                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'aircraft_code'] = new_value
 
             # if column_name == 'departure_date':
                 
             if column_name == 'economy_pax_load':
-                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_pax_load'] = new_value
-                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_pax_count'] = np.floor((new_value / 100 ) * st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_capacity'])
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_pax_load'] = new_value
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_pax_count'] = np.floor((new_value / 100 ) * st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_capacity'])
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'economy_pax_load'] = new_value
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'economy_pax_count'] = np.floor((new_value / 100 ) * st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'economy_capacity'])
             # elif column_name == 'economy_pax_count':
             #    st.session_state['df_flights'].at[row_index, 'economy_pax']
 
             if column_name == 'business_pax_load':
-               st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_pax_load'] = new_value
-               st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_pax_count'] = np.floor((new_value / 100) * st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_capacity'])
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_pax_load'] = new_value
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_pax_count'] = np.floor((new_value / 100) * st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_capacity'])
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'business_pax_load'] = new_value
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'business_pax_count'] = np.floor((new_value / 100) * st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'business_capacity'])
 
             if column_name == 'economy_avg_bag_weight':
-               st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_avg_bag_weight'] = new_value
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_avg_bag_weight'] = new_value
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'economy_avg_bag_weight'] = new_value
 
             if column_name == 'business_avg_bag_weight':
-               st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_avg_bag_weight'] = new_value
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_avg_bag_weight'] = new_value
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'business_avg_bag_weight'] = new_value
 
             if column_name == 'flight_status':
                 if new_value == 'scheduled':
@@ -155,8 +169,15 @@ def handle_df_flights_change():
                                                                               (st.session_state['df_flights']['departure_date'] == departure_date_mask) & 
                                                                               (st.session_state['df_flights']['flight_status'] == 'scheduled')].empty:
                         st.session_state['errors_list'].append("Impossible d'avoir plus d'un vol planifié avec meme Code Vol et Date Départ")
+
+                        st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'flight_status'] = 'cancelled'
+
+                    else:
+                        st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'flight_status'] = 'scheduled'
+
                 else:
-                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'flight_status'] = new_value
+                    # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'flight_status'] = new_value
+                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'flight_status'] = new_value
 
     # st.session_state['df_final'] = None
     # st.session_state['cross_matrix'] = None
@@ -170,6 +191,8 @@ def handle_df_final_wp_change():
         flight_code_mask = st.session_state['df_final_wp_to_edit'].loc[row_index, 'flight_code']
         departure_date_mask = st.session_state['df_final_wp_to_edit'].loc[row_index, 'departure_date']
 
+        flight_id_mask = st.session_state['df_final_wp_to_edit'].loc[row_index, 'flight_id']
+
         for column_name, new_value in updates.items():
             if column_name == 'departure_airport':
                 departure_airport = new_value
@@ -180,11 +203,14 @@ def handle_df_final_wp_change():
                                                     (st.session_state['df_aircrafts']['arrival_airport'] == arrival_airport) & 
                                                     (st.session_state['df_aircrafts']['aircraft_code'] == aircraft_code)].empty:
                 
-                    st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    # st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    st.session_state['warnings_list'].append(f"Flight ID: {flight_id_mask}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
 
                 else:
-                    st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'departure_airport'] = new_value
-                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'departure_airport'] = new_value
+                    # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'departure_airport'] = new_value
+                    # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'departure_airport'] = new_value
+                    st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'departure_airport'] = new_value
+                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'departure_airport'] = new_value
 
             if column_name == 'arrival_airport':
                 departure_airport = st.session_state['df_final_wp_to_edit'].loc[row_index, 'departure_airport']
@@ -195,11 +221,14 @@ def handle_df_final_wp_change():
                                                     (st.session_state['df_aircrafts']['arrival_airport'] == arrival_airport) & 
                                                     (st.session_state['df_aircrafts']['aircraft_code'] == aircraft_code)].empty:
                 
-                    st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    # st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    st.session_state['warnings_list'].append(f"Flight ID: {flight_id_mask}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
 
                 else:
-                    st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'arrival_airport'] = new_value
-                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'arrival_airport'] = new_value
+                    # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'arrival_airport'] = new_value
+                    # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'arrival_airport'] = new_value
+                    st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'arrival_airport'] = new_value
+                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'arrival_airport'] = new_value
                 
             if column_name == 'aircraft_code':
                 departure_airport = st.session_state['df_final_wp_to_edit'].loc[row_index, 'departure_airport']
@@ -210,42 +239,59 @@ def handle_df_final_wp_change():
                                                     (st.session_state['df_aircrafts']['arrival_airport'] == arrival_airport) & 
                                                     (st.session_state['df_aircrafts']['aircraft_code'] == aircraft_code)].empty:
                 
-                    st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    # st.session_state['warnings_list'].append(f"Flight ID: {st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'flight_id']}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
+                    st.session_state['warnings_list'].append(f"Flight ID: {flight_id_mask}: Combinaison de Origine: {departure_airport} ,Destination: {arrival_airport} et Type Machine: {aircraft_code} n'est pas disponible dans la table aircrafts")
 
                 else:
-                    st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'aircraft_code'] = new_value
-                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'aircraft_code'] = new_value
+                    # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'aircraft_code'] = new_value
+                    # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'aircraft_code'] = new_value
+                    st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'aircraft_code'] = new_value
+                    st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'aircraft_code'] = new_value
                 
             if column_name == 'economy_pax_load':
                 
-                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'economy_pax_load'] = new_value
-                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'economy_pax_count'] = np.floor((new_value / 100 ) * st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'economy_capacity'])
+                # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'economy_pax_load'] = new_value
+                # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'economy_pax_count'] = np.floor((new_value / 100 ) * st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'economy_capacity'])
+                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'economy_pax_load'] = new_value
+                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'economy_pax_count'] = np.floor((new_value / 100 ) * st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'economy_capacity'])
 
-                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_pax_load'] = new_value
-                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_pax_count'] = st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'economy_pax_count']
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_pax_load'] = new_value
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_pax_count'] = st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'economy_pax_count']
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'economy_pax_load'] = new_value
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'economy_pax_count'] = st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'economy_pax_count']
                 
             if column_name == 'business_pax_load':
 
-                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_pax_load'] = new_value
-                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_pax_count'] = np.floor((new_value / 100) * st.session_state['df_final_wp'].loc[row_index, 'business_capacity'])
+                # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_pax_load'] = new_value
+                # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_pax_count'] = np.floor((new_value / 100) * st.session_state['df_final_wp'].loc[row_index, 'business_capacity'])
+                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'business_pax_load'] = new_value
+                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'business_pax_count'] = np.floor((new_value / 100) * st.session_state['df_final_wp'].loc[row_index, 'business_capacity'])
 
-                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_pax_load'] = new_value
-                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_pax_count'] = st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_pax_count']
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_pax_load'] = new_value
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_pax_count'] = st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_pax_count']
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'business_pax_load'] = new_value
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'business_pax_count'] = st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'business_pax_count']
                 
             if column_name == 'economy_avg_bag_weight':
-                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'economy_avg_bag_weight'] = new_value
+                # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'economy_avg_bag_weight'] = new_value
+                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'economy_avg_bag_weight'] = new_value
 
-                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_avg_bag_weight'] = new_value
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'economy_avg_bag_weight'] = new_value
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'economy_avg_bag_weight'] = new_value
                 
             if column_name == 'business_avg_bag_weight':
-                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_avg_bag_weight'] = new_value
+                # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'business_avg_bag_weight'] = new_value
+                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'business_avg_bag_weight'] = new_value
 
-                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_avg_bag_weight'] = new_value
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'business_avg_bag_weight'] = new_value
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'business_avg_bag_weight'] = new_value
                 
             if column_name == 'flight_status':
-                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'flight_status'] = new_value
+                # st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_code'] == flight_code_mask) & (st.session_state['df_final_wp']['departure_date'] == departure_date_mask), 'flight_status'] = new_value
+                st.session_state['df_final_wp'].loc[(st.session_state['df_final_wp']['flight_id'] == flight_id_mask), 'flight_status'] = new_value
 
-                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'flight_status'] = new_value
+                # st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_code'] == flight_code_mask) & (st.session_state['df_flights']['departure_date'] == departure_date_mask), 'flight_status'] = new_value
+                st.session_state['df_flights'].loc[(st.session_state['df_flights']['flight_id'] == flight_id_mask), 'flight_status'] = new_value
                 
 
 def run_algo_without_period(df_flights, df_aircrafts):
@@ -765,7 +811,7 @@ else:
                     st.session_state['errors_list'].append("Champs nécessaires manquants: Code Vol, Aéroport Départ, Aéroport Arrivé, Date Départ, Temps Départ, Code d'Avion.")
 
                 elif not st.session_state['df_flights'][(st.session_state['df_flights']['flight_code'] == flight_code) & 
-                                                    (st.session_state['df_flights']['departure_airport'] == departure_airport) & 
+                                                    (st.session_state['df_flights']['departure_date'] == str(departure_date)) & 
                                                     (st.session_state['df_flights']['flight_status'] == 'scheduled')].empty:
                     
                     st.session_state['errors_list'].append("Impossible d'avoir deux vols planifiés avec meme Code Vol et Date Départ")
@@ -1017,7 +1063,7 @@ else:
                         st.session_state['errors_list'].append("Champs nécessaires manquants: Code Vol, Aéroport Départ, Aéroport Arrivé, Date Départ, Temps Départ, Code d'Avion.")
 
                     elif not st.session_state['df_flights'][(st.session_state['df_flights']['flight_code'] == flight_code_wp) & 
-                                                        (st.session_state['df_flights']['departure_airport'] == departure_airport_wp) & 
+                                                        (st.session_state['df_flights']['departure_date'] == str(departure_date_wp)) & 
                                                         (st.session_state['df_flights']['flight_status'] == 'scheduled')].empty:
                         
                         st.session_state['errors_list'].append("Impossible d'avoir deux vols planifiés avec meme Code Vol et Date Départ")
